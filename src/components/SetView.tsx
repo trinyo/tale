@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 interface IProps {
@@ -8,9 +9,9 @@ interface IProps {
 
 export default function SetView({ name, count, id }: IProps) {
   return (
-    <div>
-      <h6>{name}</h6>
-      <span>{count} card</span>
-    </div>
+    <Link href="/" className="bg-dark-1-normal hover:bg-dark-1-hover rounded-8 p-3 flex flex-col">
+      <h6 className="font-medium text-body2">{name}</h6>
+      <div className="font-light text-dark-outline text-label">{count} card</div>
+    </Link>
   );
 }
