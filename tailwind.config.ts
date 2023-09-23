@@ -69,6 +69,12 @@ const config: Config = {
         title1: ["48px", "58px"],
         display: ["64px", "74px"],
       },
+      width: {
+        flashcard: "calc(100% - 4px)",
+      },
+      height: {
+        flashcard: "calc(100% - 4px)",
+      },
     },
   },
   plugins: [],
