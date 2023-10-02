@@ -1,13 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 
 interface IProps {
   data: { [key: string]: string };
+  difficulity: number;
 }
 
-export default function Flashcard({ data }: IProps) {
+export default function Flashcard({ data, difficulity }: IProps) {
   const [index, setIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
 
@@ -31,6 +32,14 @@ export default function Flashcard({ data }: IProps) {
     setFlipped(false);
   };
 
+  const difficulityColor = useMemo(() => {
+    const relativeDifficulity = Object.values(data)[index].length / difficulity;
+
+    if (relativeDifficulity > 0.66) return "bg-red";
+    else if (relativeDifficulity > 0.33) return "bg-yellow";
+    else return "bg-green";
+  }, [index]);
+
   return (
     <>
       <div
@@ -41,13 +50,14 @@ export default function Flashcard({ data }: IProps) {
           style={{ transform: `perspective(5000px) rotateY(${flipped ? "180" : "0"}deg)`, zIndex: flipped ? 0 : 1 }}
           className="absolute duration-[400ms] transition-all pointer-events-none w-flashcard h-flashcard bg-dark-1-normal rounded-[6px] p-12 flex justify-center items-center select-none text-justify text-body2"
         >
+          <div className={`${difficulityColor} absolute top-3 left-3 rounded-full w-2 h-2`} />
           {Object.keys(data)[index]}
         </div>
         <div
           style={{ transform: `perspective(5000px) rotateY(${flipped ? "0" : "-180"}deg)` }}
           className="absolute duration-[400ms] transition-all pointer-events-none w-flashcard h-flashcard bg-dark-1-normal rounded-[6px] p-12 flex justify-center items-center select-none text-justify text-body2"
         >
-          {data[Object.keys(data)[index]]}
+          {Object.values(data)[index]}
         </div>
       </div>
       <div className="flex flex-row gap-3 items-center justify-center">

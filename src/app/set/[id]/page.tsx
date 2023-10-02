@@ -20,6 +20,8 @@ export default function SetPage({ params }: { params: { id: string } }) {
     redirect("/");
   }
 
+  const difficulity = Object.values(set.data!.data).sort((a, b) => b.length - a.length)[0].length;
+
   return (
     <>
       <h1 className="font-bold text-display">{set.data!.name}</h1>
@@ -30,7 +32,7 @@ export default function SetPage({ params }: { params: { id: string } }) {
         </div>
         for better focus
       </div>
-      <Flashcard data={set.data!.data} />
+      <Flashcard data={set.data!.data} difficulity={difficulity} />
     </>
   );
 }
